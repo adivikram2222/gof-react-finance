@@ -12,6 +12,7 @@ import NewPasswordSetup from "./pages/NewPasswordSetup";
 import SetupSuccess from "./pages/SetupSuccess";
 import Transaction from "./pages/Transaction";
 import Withdraw from "./pages/Withdraw";
+import Deposit from "./pages/Deposit";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -34,6 +35,7 @@ const AppRoutes = () => {
       {/* Application pages with layout */}
       <Route path="/" element={<AppLayout />}>
         <Route index element={<ProtectedRoute><Home /></ProtectedRoute>} />
+        <Route path="deposit" element={<ProtectedRoute><Deposit /></ProtectedRoute>} />
         <Route path="transaction" element={<ProtectedRoute><Transaction /></ProtectedRoute>} />
         <Route path="withdraw" element={<ProtectedRoute><Withdraw /></ProtectedRoute>} />
       </Route>
