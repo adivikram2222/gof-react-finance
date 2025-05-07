@@ -1,8 +1,4 @@
-<<<<<<< Updated upstream
-import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-=======
 import React, { createContext, useContext, useState, ReactNode } from 'react';
->>>>>>> Stashed changes
 
 interface User {
   id: string;
@@ -37,26 +33,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isPasswordReset, setIsPasswordReset] = useState(false);
   const [tempUserEmail, setTempUserEmail] = useState<string | null>(null);
 
-  // 🔁 On initial load, check localStorage
-  useEffect(() => {
-    const storedUser = localStorage.getItem("authUser");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-  }, []);
-
+  // Mock login functionality
   const login = async (email: string, password: string) => {
-<<<<<<< Updated upstream
-    if (email === "user@example.com" && password === "password") {
-      const loggedInUser: User = {
-        id: "1",
-        name: "User",
-        email: "user@example.com",
-        avatar: "/lovable-uploads/a43e7e9f-022b-4ba4-a372-cd05b7e1eeb5.png",
-      };
-      setUser(loggedInUser);
-      localStorage.setItem("authUser", JSON.stringify(loggedInUser)); // 🧠 Save to localStorage
-=======
     // In test mode, accept any credentials
     setTempUserEmail(email);
     
@@ -79,7 +57,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     // For demo purposes, accept "123456" as valid OTP
     if (otp === "123456") {
       setIsOtpVerified(true);
->>>>>>> Stashed changes
       return true;
     }
     return false;
@@ -116,14 +93,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const logout = () => {
     setUser(null);
-<<<<<<< Updated upstream
-    localStorage.removeItem("authUser"); // ❌ Remove from localStorage
-=======
     localStorage.removeItem('user');
     setIsOtpVerified(false);
     setIsPasswordReset(false);
     setTempUserEmail(null);
->>>>>>> Stashed changes
   };
 
   return (

@@ -86,25 +86,6 @@ const HomeComponent = () => {
     );
   };
 
-<<<<<<< Updated upstream
- const BottomNavigation = () => (
-    <div className="fixed bottom-0 left-0 right-0 flex justify-around items-center py-3 bg-gradient-to-r from-indigo-900 to-purple-800 border-t text-white">
-      <Button variant="ghost" className="text-white">
-        <Home size={24} />
-      </Button>
-      <Button variant="ghost" className="text-white">
-        <ShoppingBag size={24} />
-      </Button>
-      <Button variant="outline" className="rounded-full bg-purple-400 text-white border-white">
-        <Plus size={24} />
-      </Button>
-      <Button variant="ghost" className="text-white">
-        <PieChart size={24} />
-      </Button>
-      <Button variant="ghost" className="text-white">
-        <User size={24} />
-      </Button>
-=======
   const SectionHeader = ({ title, actionText, onClick }) => (
     <div className="flex justify-between items-center mb-4">
       <h2 className="font-bold text-lg text-gray-800">{title}</h2>
@@ -119,7 +100,6 @@ const HomeComponent = () => {
           <ChevronRight size={16} />
         </Button>
       )}
->>>>>>> Stashed changes
     </div>
   );
 
