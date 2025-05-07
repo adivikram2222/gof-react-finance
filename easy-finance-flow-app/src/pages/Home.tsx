@@ -24,13 +24,18 @@ import {
   Repeat,
   Menu,
   Bell,
-  ChevronRight
+  ChevronRight,
+  X,
+  BanknoteIcon,
+  ReceiptText,
+  ArrowDownToLine
 } from 'lucide-react';
 
 const HomeComponent = () => {
   const [user] = useState({ name: 'Jessica', avatar: "https://plus.unsplash.com/premium_photo-1671656349322-41de944d259b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bWFufGVufDB8fDB8fHww" });
   const isMobile = true; // For demo purposes
   const [activePage, setActivePage] = useState('home');
+  const [showSidebar, setShowSidebar] = useState(false);
 
   // Account balances
   const balances = [
@@ -118,6 +123,78 @@ const HomeComponent = () => {
     </div>
   );
 
+  // Menu items for navigation
+  const menuItems = [
+    { icon: <Home size={20} />, label: "Home", path: "/" },
+    { icon: <BanknoteIcon size={20} />, label: "Deposit", path: "/deposit" },
+    { icon: <ReceiptText size={20} />, label: "Transaction", path: "/transaction" },
+    { icon: <ArrowDownToLine size={20} />, label: "Withdraw", path: "/withdraw" },
+  ];
+
+  // Side drawer navigation
+  const SideDrawer = () => (
+    <div className={`fixed inset-0 z-50 ${showSidebar ? 'visible' : 'invisible'}`}>
+      {/* Backdrop */}
+      <div 
+        className={`absolute inset-0 bg-black transition-opacity duration-300 ${showSidebar ? 'opacity-50' : 'opacity-0'}`}
+        onClick={() => setShowSidebar(false)}
+      ></div>
+      
+      {/* Drawer panel */}
+      <div className={`absolute top-0 right-0 w-64 h-full bg-white shadow-lg transform transition-transform duration-300 ${showSidebar ? 'translate-x-0' : 'translate-x-full'}`}>
+        <div className="p-4 border-b border-gray-200 flex justify-between items-center">
+          <h2 className="font-bold text-lg">Menu</h2>
+          <button 
+            className="p-2 rounded-full hover:bg-gray-100"
+            onClick={() => setShowSidebar(false)}
+          >
+            <X size={20} />
+          </button>
+        </div>
+        
+        <div className="p-4">
+          <div className="flex items-center gap-3 mb-6">
+            <img
+              src={user.avatar}
+              alt="Avatar"
+              className="w-12 h-12 rounded-full object-cover border-2 border-gray-200"
+            />
+            <div>
+              <p className="font-bold">{user?.name || 'User'}</p>
+              <p className="text-sm text-gray-500">Account Settings</p>
+            </div>
+          </div>
+          
+          <div className="space-y-4">
+            {menuItems.map((item, index) => (
+              <button 
+                key={index}
+                className="flex items-center gap-3 w-full p-2 rounded-lg hover:bg-gray-100"
+                onClick={() => {
+                  window.location.href = item.path;
+                  setShowSidebar(false);
+                }}
+              >
+                <div className="text-purple-500">
+                  {item.icon}
+                </div>
+                <span>{item.label}</span>
+              </button>
+            ))}
+            <button className="flex items-center gap-3 w-full p-2 rounded-lg hover:bg-gray-100">
+              <PieChart size={20} className="text-amber-500" />
+              <span>Analytics</span>
+            </button>
+            <button className="flex items-center gap-3 w-full p-2 rounded-lg hover:bg-gray-100">
+              <User size={20} className="text-red-500" />
+              <span>Profile</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
   // Bottom navigation with working functionality
   const BottomNavigation = () => {
     const tabs = [
@@ -129,7 +206,7 @@ const HomeComponent = () => {
     ];
     
     return (
-      <div className="fixed bottom-0 left-0 right-0 flex justify-around items-center py-2 px-1 bg-white border-t border-gray-200 shadow-lg">
+      <div className="fixed bottom-0 left-0 right-0 flex justify-around items-center py-2 px-1 bg-white border-t border-gray-200 shadow-lg z-40">
         {tabs.map(tab => (
           <button 
             key={tab.id}
@@ -352,7 +429,7 @@ const HomeComponent = () => {
   };
 
   return (
-    <div className={`${isMobile ? 'w-full' : 'flex-1 max-w-5xl mx-auto'} pb-20 bg-gray-50`}>
+    <div className={`${isMobile ? 'w-full' : 'flex-1 max-w-5xl mx-auto'} pb-24 bg-gray-50`}>
       <div className="flex-1 flex flex-col w-full">
         {/* Header with avatar, menu icon and balances */}
         <div className="bg-gradient-to-r from-purple-600 to-purple-500 p-4 pt-6 pb-6 w-full relative overflow-hidden">
@@ -383,7 +460,12 @@ const HomeComponent = () => {
               <Button variant="ghost" size="icon" className="text-white bg-white/10 backdrop-blur-md">
                 <Bell size={20} />
               </Button>
-              <Button variant="ghost" size="icon" className="text-white bg-white/10 backdrop-blur-md">
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="text-white bg-white/10 backdrop-blur-md"
+                onClick={() => setShowSidebar(true)}
+              >
                 <Menu size={20} />
               </Button>
             </div>
@@ -412,6 +494,9 @@ const HomeComponent = () => {
 
         {/* Bottom navigation */}
         {isMobile && <BottomNavigation />}
+        
+        {/* Side drawer (menu) */}
+        <SideDrawer />
       </div>
     </div>
   );
