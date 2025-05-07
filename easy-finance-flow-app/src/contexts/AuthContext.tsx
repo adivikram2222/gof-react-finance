@@ -1,5 +1,4 @@
-
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 
 interface User {
   id: string;
@@ -20,16 +19,24 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
 
-  // Mock login functionality
+  // 🔁 On initial load, check localStorage
+  useEffect(() => {
+    const storedUser = localStorage.getItem("authUser");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+
   const login = async (email: string, password: string) => {
-    // Simulate API call
     if (email === "user@example.com" && password === "password") {
-      setUser({
+      const loggedInUser: User = {
         id: "1",
         name: "User",
         email: "user@example.com",
         avatar: "/lovable-uploads/a43e7e9f-022b-4ba4-a372-cd05b7e1eeb5.png",
-      });
+      };
+      setUser(loggedInUser);
+      localStorage.setItem("authUser", JSON.stringify(loggedInUser)); // 🧠 Save to localStorage
       return true;
     }
     return false;
@@ -37,6 +44,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const logout = () => {
     setUser(null);
+    localStorage.removeItem("authUser"); // ❌ Remove from localStorage
   };
 
   return (
