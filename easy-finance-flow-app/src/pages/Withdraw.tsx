@@ -15,7 +15,13 @@ import {
   Building,
   Wallet,
   Check,
-  Coins
+  Coins,
+  Menu,
+  X,
+  Bell,
+  BanknoteIcon,
+  ReceiptText,
+  ArrowDownToLine
 } from 'lucide-react';
 
 const Withdraw = () => {
@@ -25,6 +31,16 @@ const Withdraw = () => {
   const isMobile = true;
   // Added activePage state similar to the home component
   const [activePage, setActivePage] = useState('withdraw');
+  // State for the sidebar
+  const [showSidebar, setShowSidebar] = useState(false);
+  
+  // Menu items for navigation
+  const menuItems = [
+    { icon: <Home size={20} />, label: "Home", path: "/" },
+    { icon: <BanknoteIcon size={20} />, label: "Deposit", path: "/deposit" },
+    { icon: <ReceiptText size={20} />, label: "Transaction", path: "/transaction" },
+    { icon: <ArrowDownToLine size={20} />, label: "Withdraw", path: "/withdraw" },
+  ];
   
   const quickAmounts = [50, 100, 200, 500];
   
@@ -50,6 +66,58 @@ const Withdraw = () => {
     return methods[method] || method;
   };
 
+  // Side drawer navigation
+  const SideDrawer = () => (
+    <div className={`fixed inset-0 z-50 ${showSidebar ? 'visible' : 'invisible'}`}>
+      {/* Backdrop */}
+      <div 
+        className={`absolute inset-0 bg-black transition-opacity duration-300 ${showSidebar ? 'opacity-50' : 'opacity-0'}`}
+        onClick={() => setShowSidebar(false)}
+      ></div>
+      
+      {/* Drawer panel */}
+      <div className={`absolute top-0 right-0 w-64 h-full bg-white shadow-lg transform transition-transform duration-300 ${showSidebar ? 'translate-x-0' : 'translate-x-full'}`}>
+        <div className="p-4 border-b border-gray-200 flex justify-between items-center">
+          <h2 className="font-bold text-lg">Menu</h2>
+          <button 
+            className="p-2 rounded-full hover:bg-gray-100"
+            onClick={() => setShowSidebar(false)}
+          >
+            <X size={20} />
+          </button>
+        </div>
+        
+        <div className="p-4">
+          <div className="space-y-4">
+            {menuItems.map((item, index) => (
+              <button 
+                key={index}
+                className="flex items-center gap-3 w-full p-2 rounded-lg hover:bg-gray-100"
+                onClick={() => {
+                  window.location.href = item.path;
+                  setShowSidebar(false);
+                }}
+              >
+                <div className="text-purple-500">
+                  {item.icon}
+                </div>
+                <span>{item.label}</span>
+              </button>
+            ))}
+            <button className="flex items-center gap-3 w-full p-2 rounded-lg hover:bg-gray-100">
+              <PieChart size={20} className="text-amber-500" />
+              <span>Analytics</span>
+            </button>
+            <button className="flex items-center gap-3 w-full p-2 rounded-lg hover:bg-gray-100">
+              <User size={20} className="text-red-500" />
+              <span>Profile</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
   // Bottom navigation with working functionality, same as in HomeComponent
   const BottomNavigation = () => {
     const tabs = [
@@ -61,7 +129,7 @@ const Withdraw = () => {
     ];
     
     return (
-      <div className="fixed bottom-0 left-0 right-0 flex justify-around items-center py-2 px-1 bg-white border-t border-gray-200 shadow-lg">
+      <div className="fixed bottom-0 left-0 right-0 flex justify-around items-center py-2 px-1 bg-white border-t border-gray-200 shadow-lg z-40">
         {tabs.map(tab => (
           <button 
             key={tab.id}
@@ -313,7 +381,7 @@ const Withdraw = () => {
   };
 
   return (
-    <div className={`${isMobile ? 'w-full' : 'flex-1 max-w-5xl mx-auto'} pb-20 bg-gray-50`}>      
+    <div className={`${isMobile ? 'w-full' : 'flex-1 max-w-5xl mx-auto'} pb-24 bg-gray-50`}>      
       <div className="flex-1 flex flex-col h-full">
         {/* Header */}
         <div className="bg-gradient-to-r from-indigo-900 to-purple-800 p-4 pt-6 pb-6">
@@ -325,6 +393,16 @@ const Withdraw = () => {
                activePage === 'analytics' ? 'Analytics' :
                activePage === 'profile' ? 'Profile' : 'Withdraw Funds'}
             </h1>
+            <div className="flex gap-2">
+              <Button 
+                variant="ghost" 
+                size="sm"
+                className="text-white bg-white/10 backdrop-blur-md p-2"
+                onClick={() => setShowSidebar(true)}
+              >
+                <Menu size={20} />
+              </Button>
+            </div>
           </div>
         </div>
 
@@ -335,6 +413,9 @@ const Withdraw = () => {
 
         {/* Bottom navigation - same as in HomeComponent */}
         {isMobile && <BottomNavigation />}
+        
+        {/* Side drawer (menu) */}
+        <SideDrawer />
       </div>
     </div>
   );
