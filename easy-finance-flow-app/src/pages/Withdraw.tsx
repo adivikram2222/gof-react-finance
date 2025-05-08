@@ -86,7 +86,7 @@ const Withdraw = () => {
   const recentWithdrawals = [
     { type: "withdrawal", title: "Bank Withdrawal", amount: "-₹25,000.00", date: "Yesterday, 14:30", icon: <ArrowDownLeft size={16} className="text-red-500" /> },
     { type: "withdrawal", title: "HDFC Card", amount: "-₹10,000.00", date: "Apr 22, 2025", icon: <ArrowDownLeft size={16} className="text-red-500" /> },
-    { type: "transfer", title: "To Savings", amount: "-₹5,000.00", date: "Apr 15, 2025", icon: <Repeat size={16} className="text-blue-500" /> },
+    { type: "transfer", title: "To Topup balance", amount: "-₹5,000.00", date: "Apr 15, 2025", icon: <Repeat size={16} className="text-blue-500" /> },
   ];
   
   const withdrawalMethods = [

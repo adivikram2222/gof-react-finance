@@ -38,7 +38,7 @@ const ProfilePage = () => {
     pan: "ABCTY1234D",
     aadhar: "XXXX-XXXX-7890",
     bankAccounts: [
-      { bank: "HDFC Bank", accountNumber: "XXXX-XXXX-4578", type: "Savings", ifsc: "HDFC0001234" },
+      { bank: "HDFC Bank", accountNumber: "XXXX-XXXX-4578", type: "Topup balance", ifsc: "HDFC0001234" },
       { bank: "ICICI Bank", accountNumber: "XXXX-XXXX-3456", type: "Current", ifsc: "ICIC0005678" },
     ],
     cards: [

@@ -278,7 +278,7 @@ const Deposit = () => {
             
             <div className="mt-3 flex justify-between items-center">
               <div className="flex gap-1">
-                <span className="text-xs px-1.5 py-0.5 bg-blue-100 text-blue-600 rounded">Savings: $3,420</span>
+                <span className="text-xs px-1.5 py-0.5 bg-blue-100 text-blue-600 rounded">Topup balance: $3,420</span>
                 <span className="text-xs px-1.5 py-0.5 bg-green-100 text-green-600 rounded">Checking: $4,826</span>
               </div>
               <span className="text-xs text-gray-500">Updated just now</span>

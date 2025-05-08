@@ -7,7 +7,7 @@ import DepositForm from './DepositForm';
 const BankDeposit = () => {
   const bankDetails = [
     { label: 'Bank Name', value: 'National Bank Ltd' },
-    { label: 'Account Name', value: 'Finance App Ltd' },
+    { label: 'Account Name', value: 'OrgaPay Ltd' },
     { label: 'Account Number', value: '1234567890123456' },
     { label: 'IFSC Code', value: 'NATL0001234' },
     { label: 'Account Type', value: 'Current Account' },

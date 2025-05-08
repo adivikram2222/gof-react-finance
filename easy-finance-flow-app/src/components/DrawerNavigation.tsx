@@ -151,7 +151,7 @@ const DrawerNavigation = () => {
           <div className="w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center text-white font-bold mr-2">
             F
           </div>
-          <h2 className="text-xl font-bold text-purple-600">Finance App</h2>
+          <h2 className="text-xl font-bold text-purple-600">OrgaPay</h2>
         </div>
       </div>
       
@@ -331,7 +331,7 @@ const DrawerNavigation = () => {
       <>
         {/* Header for mobile */}
         <div className="flex justify-between items-center bg-gradient-to-r from-purple-700 via-purple-600 to-indigo-700 px-4 py-3 fixed top-0 left-0 right-0 z-10">
-          <h2 className="text-lg font-bold text-white">Finance App</h2>
+          <h2 className="text-lg font-bold text-white">OrgaPay</h2>
           
           <div className="flex items-center space-x-3">
             {/* Notifications */}
