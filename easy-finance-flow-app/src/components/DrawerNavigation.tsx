@@ -335,15 +335,19 @@ const DrawerNavigation = () => {
           
           <div className="flex items-center space-x-3">
             {/* Notifications */}
-            <Button variant="ghost" size="icon" className="text-white relative bg-white/10 hover:bg-white/20">
-              <Bell size={20} />
-              {userData.notifications > 0 && (
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
-                  {userData.notifications}
-                </span>
-              )}
-            </Button>
-            
+            <Button
+  variant="ghost"
+  size="icon"
+  className="text-white relative bg-white/10 hover:bg-white/20"
+  onClick={() => navigate('/notifications')}
+>
+  <Bell size={20} />
+  {userData.notifications > 0 && (
+    <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+      {userData.notifications}
+    </span>
+  )}
+</Button>
             {/* User profile dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
