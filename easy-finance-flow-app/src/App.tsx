@@ -13,6 +13,8 @@ import SetupSuccess from "./pages/SetupSuccess";
 import Transaction from "./pages/Transaction";
 import Withdraw from "./pages/Withdraw";
 import Deposit from "./pages/Deposit";
+import Profile from "./pages/Profile";
+import NotificationsPage from "./pages/NotificationsPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -38,6 +40,9 @@ const AppRoutes = () => {
         <Route path="deposit" element={<ProtectedRoute><Deposit /></ProtectedRoute>} />
         <Route path="transaction" element={<ProtectedRoute><Transaction /></ProtectedRoute>} />
         <Route path="withdraw" element={<ProtectedRoute><Withdraw /></ProtectedRoute>} />
+        <Route path="profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+        <Route path="notifications" element={<ProtectedRoute><NotificationsPage /></ProtectedRoute>} />
+
       </Route>
       
       {/* Authentication pages without layout */}

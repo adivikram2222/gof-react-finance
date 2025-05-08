@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import BottomNavigation from '@/components/BottomNavigation';
 import {
   Mail,
   Phone,
@@ -416,6 +417,8 @@ const ProfilePage = () => {
           animation: scale 0.3s ease-in-out;
         }
       `}</style>
+       {/* Bottom Navigation */}
+       <BottomNavigation />
     </div>
   );
 };
@@ -436,6 +439,7 @@ const ProfileInfoItem = ({ icon, label, value }) => (
       <Edit size={16} />
     </button>
   </div>
+  
 );
 
 export default ProfilePage;

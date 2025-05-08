@@ -21,7 +21,7 @@ const BottomNavigation = () => {
     { id: 'profile', icon: <User size={24} />, label: 'Profile', path: '/profile' }
   ];
   
-  // Helper function to determine active tab
+  // Helper function to determine activne tab
   const isActive = (path) => {
     // For home path, check exact match
     if (path === '/') {

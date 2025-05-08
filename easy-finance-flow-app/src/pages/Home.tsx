@@ -180,28 +180,31 @@ const HomeComponent = () => {
         </div>
       </div>
 
-      {/* Balance cards - with glassomorphism effect */}
-      <div className="px-4 -mt-20 mb-8 relative z-20">
-        <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
-          {balances.map((balance, idx) => (
-            <div 
-              key={idx} 
-              className="backdrop-blur-md bg-white/90 rounded-2xl shadow-lg min-w-[160px] flex-1 p-4 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
-              style={{
-                backdropFilter: 'blur(8px)',
-                WebkitBackdropFilter: 'blur(8px)'
-              }}
-              onClick={() => animateElement(`balance-${idx}`)}
-            >
-              <div className={`${balance.bgColor} w-12 h-12 rounded-full flex items-center justify-center mb-3 shadow-md ${balance.textColor}`}>
-                {balance.icon}
-              </div>
-              <p className="text-gray-600 font-medium">{balance.type}</p>
-              <p id={`balance-${idx}`} className="text-xl font-bold mt-1 transition-transform">{balance.amount}</p>
-            </div>
-          ))}
+      {/* Balance cards - with subtle glassmorphism effect */}
+<div className="px-4 -mt-20 mb-8 relative z-20">
+  <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
+    {balances.map((balance, idx) => (
+      <div 
+        key={idx} 
+        className="bg-white/30 backdrop-blur-sm border border-white/20 rounded-2xl shadow-sm min-w-[160px] flex-1 p-4 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"
+        style={{
+          backdropFilter: 'blur(6px)',
+          WebkitBackdropFilter: 'blur(6px)',
+        }}
+        onClick={() => animateElement(`balance-${idx}`)}
+      >
+        <div className={`${balance.bgColor} w-12 h-12 rounded-full flex items-center justify-center mb-3 shadow ${balance.textColor}`}>
+          {balance.icon}
         </div>
+        <p className="text-gray-700 font-medium">{balance.type}</p>
+        <p id={`balance-${idx}`} className="text-xl font-bold mt-1 text-gray-900 transition-transform">
+          {balance.amount}
+        </p>
       </div>
+    ))}
+  </div>
+</div>
+
 
       {/* Main content area */}
       <div className="flex-1 px-4 space-y-6">
