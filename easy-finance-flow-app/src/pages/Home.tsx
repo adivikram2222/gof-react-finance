@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+
 import {
   Wallet,
   Send,
@@ -29,6 +30,7 @@ import {
 const HomeComponent = () => {
   const [user] = useState({ name: 'Jessica', avatar: "https://plus.unsplash.com/premium_photo-1671656349322-41de944d259b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bWFufGVufDB8fDB8fHww" });
   const isMobile = true; // For demo purposes
+  const [activePage, setActivePage] = useState('home');
 
   // Account balances
   const balances = [
@@ -60,6 +62,9 @@ const HomeComponent = () => {
     { type: "income", title: "Earning Received", amount: "+$120.00", date: "Today, 14:30", icon: <ArrowUpRight size={16} className="text-green-500" /> },
     { type: "expense", title: "Shopping Payment", amount: "-$45.80", date: "Yesterday, 09:15", icon: <ArrowDownLeft size={16} className="text-red-500" /> },
     { type: "transfer", title: "Topup Balance", amount: "-$250.00", date: "May 05, 2025", icon: <Repeat size={16} className="text-blue-500" /> },
+    { type: "income", title: "Salary Deposit", amount: "+$1,500.00", date: "May 03, 2025", icon: <ArrowUpRight size={16} className="text-green-500" /> },
+    { type: "expense", title: "Grocery Store", amount: "-$67.25", date: "May 02, 2025", icon: <ArrowDownLeft size={16} className="text-red-500" /> },
+    { type: "expense", title: "Utility Bills", amount: "-$145.00", date: "May 01, 2025", icon: <ArrowDownLeft size={16} className="text-red-500" /> },
   ];
 
   const Button = ({ children, className, variant, size, onClick }) => {
@@ -113,10 +118,8 @@ const HomeComponent = () => {
     </div>
   );
 
-  // Bottom navigation with reusable component for other pages
+  // Bottom navigation with working functionality
   const BottomNavigation = () => {
-    const [activeTab, setActiveTab] = useState('home');
-    
     const tabs = [
       { id: 'home', icon: <Home size={24} />, label: 'Home' },
       { id: 'transactions', icon: <ShoppingBag size={24} />, label: 'Transactions' },
@@ -130,25 +133,222 @@ const HomeComponent = () => {
         {tabs.map(tab => (
           <button 
             key={tab.id}
-            className={`flex flex-col items-center justify-center py-1 px-3 rounded-lg ${activeTab === tab.id ? 'text-purple-600' : 'text-gray-600'}`}
-            onClick={() => setActiveTab(tab.id)}
+            className={`flex flex-col items-center justify-center py-1 px-3 rounded-lg ${activePage === tab.id ? 'text-purple-600' : 'text-gray-600'}`}
+            onClick={() => setActivePage(tab.id)}
           >
             {tab.id === 'add' ? (
               <div className="bg-purple-500 text-white p-3 rounded-full shadow-md hover:bg-purple-600 -mt-5 mb-1 transition-transform transform hover:scale-110">
                 {tab.icon}
               </div>
             ) : (
-              <div className={`${activeTab === tab.id ? 'text-purple-600' : 'text-gray-500'}`}>
+              <div className={`${activePage === tab.id ? 'text-purple-600' : 'text-gray-500'}`}>
                 {tab.icon}
               </div>
             )}
-            <span className={`text-xs mt-1 font-medium ${activeTab === tab.id ? 'text-purple-600' : 'text-gray-500'}`}>
+            <span className={`text-xs mt-1 font-medium ${activePage === tab.id ? 'text-purple-600' : 'text-gray-500'}`}>
               {tab.label}
             </span>
           </button>
         ))}
       </div>
     );
+  };
+
+  // HomePage Component
+  const HomePage = () => (
+    <>
+      {/* Quick actions */}
+      <div className="bg-white rounded-2xl shadow-sm p-4">
+        <SectionHeader title="Quick Actions" />
+        <div className="grid grid-cols-4 gap-2">
+          {quickActions.map((action, index) => (
+            <div 
+              key={index} 
+              className="flex flex-col items-center justify-center hover:bg-gray-50 p-2 rounded-lg cursor-pointer transition-all duration-200 hover:shadow-sm"
+            >
+              <div className={`w-12 h-12 ${action.bg} rounded-xl flex items-center justify-center mb-2 ${action.color} shadow-sm`}>
+                {action.icon}
+              </div>
+              <span className="text-xs font-medium">{action.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Transaction Card */}
+      <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+        <div className="p-4">
+          <SectionHeader 
+            title="Transaction Overview" 
+            actionText="See all" 
+            onClick={() => setActivePage('transactions')} 
+          />
+
+          <div className="grid grid-cols-3 gap-3 mb-5">
+            <div className="bg-gradient-to-br from-purple-50 to-purple-100/60 rounded-xl p-3.5 relative overflow-hidden">
+              <div className="absolute -right-2 -top-2 bg-purple-500/10 w-12 h-12 rounded-full"></div>
+              <div className="bg-white w-10 h-10 rounded-full flex items-center justify-center mb-2 shadow-sm">
+                <TrendingUp size={18} className="text-purple-500" />
+              </div>
+              <p className="text-xs text-gray-500">Income</p>
+              <p className="font-bold text-sm mt-1">$1,240</p>
+            </div>
+            <div className="bg-gradient-to-br from-red-50 to-red-100/60 rounded-xl p-3.5 relative overflow-hidden">
+              <div className="absolute -right-2 -top-2 bg-red-500/10 w-12 h-12 rounded-full"></div>
+              <div className="bg-white w-10 h-10 rounded-full flex items-center justify-center mb-2 shadow-sm">
+                <ArrowDownLeft size={18} className="text-red-500" />
+              </div>
+              <p className="text-xs text-gray-500">Expense</p>
+              <p className="font-bold text-sm mt-1">$789.50</p>
+            </div>
+            <div className="bg-gradient-to-br from-blue-50 to-blue-100/60 rounded-xl p-3.5 relative overflow-hidden">
+              <div className="absolute -right-2 -top-2 bg-blue-500/10 w-12 h-12 rounded-full"></div>
+              <div className="bg-white w-10 h-10 rounded-full flex items-center justify-center mb-2 shadow-sm">
+                <Repeat size={18} className="text-blue-500" />
+              </div>
+              <p className="text-xs text-gray-500">Transfers</p>
+              <p className="font-bold text-sm mt-1">$350</p>
+            </div>
+          </div>
+        </div>
+        
+        <div className="border-t border-gray-100">
+          <div className="p-4">
+            <SectionHeader 
+              title="Recent Transactions" 
+              actionText="View all" 
+              onClick={() => setActivePage('transactions')} 
+            />
+            <div className="space-y-4">
+              {recentTransactions.slice(0, 3).map((transaction, idx) => (
+                <div key={idx} className="flex items-center justify-between hover:bg-gray-50 p-2 rounded-lg transition-colors">
+                  <div className="flex items-center gap-3">
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                      transaction.type === 'income' ? 'bg-green-100' : 
+                      transaction.type === 'expense' ? 'bg-red-100' : 'bg-blue-100'
+                    }`}>
+                      {transaction.icon}
+                    </div>
+                    <div>
+                      <p className="font-medium text-sm">{transaction.title}</p>
+                      <p className="text-xs text-gray-500">{transaction.date}</p>
+                    </div>
+                  </div>
+                  <p className={`font-semibold ${
+                    transaction.type === 'income' ? 'text-green-500' : 
+                    transaction.type === 'expense' ? 'text-red-500' : 'text-blue-500'
+                  }`}>
+                    {transaction.amount}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Payment list */}
+      <div className="bg-white rounded-2xl shadow-sm p-4 mb-6">
+        <SectionHeader title="Payment Options" actionText="More" />
+        <div className="grid grid-cols-4 gap-4">
+          {paymentOptions.slice(0, 8).map((option, index) => (
+            <div 
+              key={index} 
+              className="flex flex-col items-center cursor-pointer group"
+            >
+              <div className={`w-12 h-12 ${option.color} rounded-xl flex items-center justify-center mb-2 text-white shadow-sm group-hover:shadow-md group-hover:scale-105 transition-all duration-200`}>
+                {option.icon}
+              </div>
+              <span className="text-xs text-center">{option.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
+  );
+
+  // TransactionsPage Component
+  const TransactionsPage = () => (
+    <div className="bg-white rounded-2xl shadow-sm p-4 mb-6">
+      <SectionHeader 
+        title="All Transactions" 
+        actionText="Filter" 
+      />
+      
+      <div className="flex gap-2 mb-4 overflow-x-auto pb-2 scrollbar-hide">
+        <Button variant="default" size="sm" className="whitespace-nowrap">All</Button>
+        <Button variant="outline" size="sm" className="whitespace-nowrap">Income</Button>
+        <Button variant="outline" size="sm" className="whitespace-nowrap">Expense</Button>
+        <Button variant="outline" size="sm" className="whitespace-nowrap">Transfer</Button>
+      </div>
+      
+      <div className="space-y-4 mt-4">
+        {recentTransactions.map((transaction, idx) => (
+          <div key={idx} className="flex items-center justify-between hover:bg-gray-50 p-3 rounded-lg transition-colors border border-gray-100">
+            <div className="flex items-center gap-3">
+              <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
+                transaction.type === 'income' ? 'bg-green-100' : 
+                transaction.type === 'expense' ? 'bg-red-100' : 'bg-blue-100'
+              }`}>
+                {transaction.icon}
+              </div>
+              <div>
+                <p className="font-medium">{transaction.title}</p>
+                <p className="text-xs text-gray-500">{transaction.date}</p>
+              </div>
+            </div>
+            <p className={`font-bold ${
+              transaction.type === 'income' ? 'text-green-500' : 
+              transaction.type === 'expense' ? 'text-red-500' : 'text-blue-500'
+            }`}>
+              {transaction.amount}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
+  // Content to render based on active page
+  const renderContent = () => {
+    switch (activePage) {
+      case 'home':
+        return <HomePage />;
+      case 'transactions':
+        return <TransactionsPage />;
+      case 'add':
+        return (
+          <div className="flex flex-col items-center justify-center h-64 text-center">
+            <div className="bg-purple-100 p-4 rounded-full mb-4">
+              <Plus size={32} className="text-purple-500" />
+            </div>
+            <h2 className="text-xl font-bold mb-2">Add Transaction</h2>
+            <p className="text-gray-500">This feature is coming soon</p>
+          </div>
+        );
+      case 'analytics':
+        return (
+          <div className="flex flex-col items-center justify-center h-64 text-center">
+            <div className="bg-blue-100 p-4 rounded-full mb-4">
+              <PieChart size={32} className="text-blue-500" />
+            </div>
+            <h2 className="text-xl font-bold mb-2">Analytics</h2>
+            <p className="text-gray-500">This feature is coming soon</p>
+          </div>
+        );
+      case 'profile':
+        return (
+          <div className="flex flex-col items-center justify-center h-64 text-center">
+            <div className="bg-green-100 p-4 rounded-full mb-4">
+              <User size={32} className="text-green-500" />
+            </div>
+            <h2 className="text-xl font-bold mb-2">User Profile</h2>
+            <p className="text-gray-500">This feature is coming soon</p>
+          </div>
+        );
+      default:
+        return <HomePage />;
+    }
   };
 
   return (
@@ -180,12 +380,12 @@ const HomeComponent = () => {
               </div>
             </div>
             <div className="flex gap-2">
-              <Button variant="ghost" size="icon" className="text-white bg-white/10 backdrop-blur-md">
+               {/* <Button variant="ghost" size="icon" className="text-white bg-white/10 backdrop-blur-md">
                 <Bell size={20} />
-              </Button>
-              <Button variant="ghost" size="icon" className="text-white bg-white/10 backdrop-blur-md">
+              </Button> */}
+              {/* <Button variant="ghost" size="icon" className="text-white bg-white/10 backdrop-blur-md">
                 <Menu size={20} />
-              </Button>
+              </Button>  */}
             </div>
           </div>
         </div>
@@ -205,107 +405,9 @@ const HomeComponent = () => {
           </div>
         </div>
 
-        {/* Main content area */}
+        {/* Main content area - dynamic based on selected page */}
         <div className="flex-1 px-4 space-y-6">
-          {/* Quick actions */}
-          <div className="bg-white rounded-2xl shadow-sm p-4">
-            <SectionHeader title="Quick Actions" />
-            <div className="grid grid-cols-4 gap-2">
-              {quickActions.map((action, index) => (
-                <div 
-                  key={index} 
-                  className="flex flex-col items-center justify-center hover:bg-gray-50 p-2 rounded-lg cursor-pointer transition-all duration-200 hover:shadow-sm"
-                >
-                  <div className={`w-12 h-12 ${action.bg} rounded-xl flex items-center justify-center mb-2 ${action.color} shadow-sm`}>
-                    {action.icon}
-                  </div>
-                  <span className="text-xs font-medium">{action.label}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Transaction Card */}
-          <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
-            <div className="p-4">
-              <SectionHeader title="Transaction Overview" actionText="See all" />
-
-              <div className="grid grid-cols-3 gap-3 mb-5">
-                <div className="bg-gradient-to-br from-purple-50 to-purple-100/60 rounded-xl p-3.5 relative overflow-hidden">
-                  <div className="absolute -right-2 -top-2 bg-purple-500/10 w-12 h-12 rounded-full"></div>
-                  <div className="bg-white w-10 h-10 rounded-full flex items-center justify-center mb-2 shadow-sm">
-                    <TrendingUp size={18} className="text-purple-500" />
-                  </div>
-                  <p className="text-xs text-gray-500">Income</p>
-                  <p className="font-bold text-sm mt-1">$1,240</p>
-                </div>
-                <div className="bg-gradient-to-br from-red-50 to-red-100/60 rounded-xl p-3.5 relative overflow-hidden">
-                  <div className="absolute -right-2 -top-2 bg-red-500/10 w-12 h-12 rounded-full"></div>
-                  <div className="bg-white w-10 h-10 rounded-full flex items-center justify-center mb-2 shadow-sm">
-                    <ArrowDownLeft size={18} className="text-red-500" />
-                  </div>
-                  <p className="text-xs text-gray-500">Expense</p>
-                  <p className="font-bold text-sm mt-1">$789.50</p>
-                </div>
-                <div className="bg-gradient-to-br from-blue-50 to-blue-100/60 rounded-xl p-3.5 relative overflow-hidden">
-                  <div className="absolute -right-2 -top-2 bg-blue-500/10 w-12 h-12 rounded-full"></div>
-                  <div className="bg-white w-10 h-10 rounded-full flex items-center justify-center mb-2 shadow-sm">
-                    <Repeat size={18} className="text-blue-500" />
-                  </div>
-                  <p className="text-xs text-gray-500">Transfers</p>
-                  <p className="font-bold text-sm mt-1">$350</p>
-                </div>
-              </div>
-            </div>
-            
-            <div className="border-t border-gray-100">
-              <div className="p-4">
-                <SectionHeader title="Recent Transactions" actionText="View all" />
-                <div className="space-y-4">
-                  {recentTransactions.map((transaction, idx) => (
-                    <div key={idx} className="flex items-center justify-between hover:bg-gray-50 p-2 rounded-lg transition-colors">
-                      <div className="flex items-center gap-3">
-                        <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                          transaction.type === 'income' ? 'bg-green-100' : 
-                          transaction.type === 'expense' ? 'bg-red-100' : 'bg-blue-100'
-                        }`}>
-                          {transaction.icon}
-                        </div>
-                        <div>
-                          <p className="font-medium text-sm">{transaction.title}</p>
-                          <p className="text-xs text-gray-500">{transaction.date}</p>
-                        </div>
-                      </div>
-                      <p className={`font-semibold ${
-                        transaction.type === 'income' ? 'text-green-500' : 
-                        transaction.type === 'expense' ? 'text-red-500' : 'text-blue-500'
-                      }`}>
-                        {transaction.amount}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Payment list */}
-          <div className="bg-white rounded-2xl shadow-sm p-4 mb-6">
-            <SectionHeader title="Payment Options" actionText="More" />
-            <div className="grid grid-cols-4 gap-4">
-              {paymentOptions.slice(0, 8).map((option, index) => (
-                <div 
-                  key={index} 
-                  className="flex flex-col items-center cursor-pointer group"
-                >
-                  <div className={`w-12 h-12 ${option.color} rounded-xl flex items-center justify-center mb-2 text-white shadow-sm group-hover:shadow-md group-hover:scale-105 transition-all duration-200`}>
-                    {option.icon}
-                  </div>
-                  <span className="text-xs text-center">{option.label}</span>
-                </div>
-              ))}
-            </div>
-          </div>
+          {renderContent()}
         </div>
 
         {/* Bottom navigation */}

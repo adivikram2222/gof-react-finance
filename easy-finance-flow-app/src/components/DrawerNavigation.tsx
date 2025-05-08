@@ -18,6 +18,7 @@ import {
   ArrowDownToLine,
   LogOut,
   Menu,
+  BanknoteIcon,
 } from 'lucide-react';
 
 const DrawerNavigation: React.FC = () => {
@@ -28,6 +29,7 @@ const DrawerNavigation: React.FC = () => {
   
   const menuItems = [
     { icon: <Home size={20} />, label: "Home", path: "/" },
+    { icon: <BanknoteIcon size={20} />, label: "Deposit", path: "/deposit" },
     { icon: <ReceiptText size={20} />, label: "Transaction", path: "/transaction" },
     { icon: <ArrowDownToLine size={20} />, label: "Withdraw", path: "/withdraw" },
   ];
@@ -52,17 +54,22 @@ const DrawerNavigation: React.FC = () => {
         </div>
       </div>
       
-      {menuItems.map((item, index) => (
-        <Link to={item.path} key={index} onClick={() => isMobile && setIsOpen(false)}>
-          <Button
-            variant={isActive(item.path) ? "default" : "ghost"}
-            className={`w-full justify-start ${isActive(item.path) ? 'bg-purple-DEFAULT text-white' : ''}`}
-          >
-            <span className="mr-2">{item.icon}</span>
-            {item.label}
-          </Button>
-        </Link>
-      ))}
+      {menuItems.map((item, index) => {
+  const active = isActive(item.path);
+  return (
+    <Link to={item.path} key={index} onClick={() => isMobile && setIsOpen(false)}>
+      <Button
+        variant={active ? "default" : "ghost"}
+        className={`w-full justify-start font-medium ${
+          active ? 'bg-purple-DEFAULT text-white' : 'text-gray-800 hover:bg-gray-100'
+        }`}
+      >
+        <span className="mr-2">{item.icon}</span>
+        {item.label}
+      </Button>
+    </Link>
+    );
+  })}
       
       <Button 
         variant="ghost" 
@@ -80,9 +87,13 @@ const DrawerNavigation: React.FC = () => {
     return (
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
         <SheetTrigger asChild>
-          <Button variant="ghost" size="icon" className="absolute top-4 left-4 z-10">
-            <Menu />
-          </Button>
+        <Button
+  variant="ghost"
+  size="icon"
+  className="absolute top-4 right-8 z-50 text-white"
+>
+  <Menu />
+</Button>
         </SheetTrigger>
         <SheetContent side="left" className="w-64">
           <SheetHeader>
