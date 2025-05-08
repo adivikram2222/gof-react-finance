@@ -20,7 +20,9 @@ import {
   BadgeIndianRupee,
   BanknoteIcon,
   Bell,
-  Menu
+  Menu,
+  Origami,
+  OrigamiIcon
 } from 'lucide-react';
 // Import BottomNavigation component
 import BottomNavigation from '../components/BottomNavigation';
@@ -43,7 +45,8 @@ const HomeComponent = () => {
   const balances = [
     { type: "Earnings", amount: "₹56,785.42", color: "bg-green-500", textColor: "text-green-500", bgColor: "bg-green-100", icon: <BadgeIndianRupee size={20} /> },
     { type: "Topup balance", amount: "₹24,450.54", color: "bg-purple-500", textColor: "text-purple-500", bgColor: "bg-purple-100", icon: <BanknoteIcon size={20} /> },
-    { type: "Credit", amount: "₹75,200.00", color: "bg-blue-500", textColor: "text-blue-500", bgColor: "bg-blue-100", icon: <CreditCard size={20} /> }
+    { type: "Orgaveda", amount: "₹5,200.00", color: "bg-blue-500", textColor: "text-blue-500", bgColor: "bg-blue-100", icon: <OrigamiIcon size={20} /> },
+    { type: "Credit", amount: "-₹75,200.00", color: "bg-blue-500", textColor: "text-blue-500", bgColor: "bg-blue-100", icon: <CreditCard size={20} /> }
   ];
 
   // Modified quick actions with utilities and withdrawal
